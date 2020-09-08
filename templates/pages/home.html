@@ -55,6 +55,8 @@
         xhr.setRequestHeader("HTTP_X_REQUESTED_WITH", "XMLHttpRequest")
         xhr.setRequestHeader("X-REQUESTED-With", "XMLHttpRequest")
         xhr.onload = function(){
+            console.log(xhr.status)
+
             if (xhr.status === 201){
                 handleTweetFormError("", false)
                 const newTweetJson = xhr.response
@@ -80,6 +82,9 @@
                 console.log(contentErrorMsg)
             }else if (xhr.status === 500){
                 alert("server error")
+            }else if (xhr.status === 401){
+                alert("you must login")
+                window.location.href = "/login"
             }
         }
 
@@ -102,7 +107,7 @@
         xhr.open(method, url)
         xhr.onload = function(){
             const serverResponse = xhr.response
-            var listedItems = serverResponse.response
+            var listedItems = serverResponse
             var finalTweetStr = ""
             var i;
             for (i = 0; i < listedItems.length; i++){
